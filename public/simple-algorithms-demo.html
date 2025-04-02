@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Cards for Sorting and Searching</title>
+  <title>Simple Algorithms Demo</title>
   <style>
     body {
       display: flex;
@@ -78,6 +78,21 @@
       margin-top: 10px;
       font-weight: bold;
     }
+
+
+/* A fixed "footer" at the bottom of the page */
+#usageDisplay {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 10px;
+  text-align: center;
+  background-color: #f6f5f0;  /* matches your notepad background or pick any color */
+  border-top: 2px solid #444; /* a slight border to separate from content */
+  z-index: 9999;              /* ensure it stays on top if other elements overlap */
+}
+
     
   </style>
 </head>
@@ -107,12 +122,10 @@
       <button id="clearDrawingButton">Clear Drawing</button>
       <button id="eraserButton">Eraser OFF</button>
     </div>
-
-    <!-- (Optional) Usage display area -->
-    <div id="usageDisplay" class="usage-info"></div>
     
   </div>
-
+    <!-- (Optional) Usage display area -->
+    <div id="usageDisplay" class="usage-info"></div>
   <script>
     const cardContainer = document.getElementById('cards');
     const tempCard = document.getElementById('temporary');
