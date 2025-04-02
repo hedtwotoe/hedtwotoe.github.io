@@ -83,11 +83,11 @@
 /* A fixed "footer" at the bottom of the page */
 #usageDisplay {
   position: fixed;
-  bottom: 0;
+  bottom: 20px;
   left: 0;
   width: 100%;
   padding: 10px;
-  text-align: center;
+  text-align: left;
   background-color: #f6f5f0;  /* matches your notepad background or pick any color */
   border-top: 2px solid #444; /* a slight border to separate from content */
   z-index: 9999;              /* ensure it stays on top if other elements overlap */
@@ -321,7 +321,7 @@
           /* If you want to display usage on the page, un-comment below:*/
           if (data.success && usageDisplay) {
             usageDisplay.textContent =
-              `${data.function_name} used ${data.usage_count} times since ${data.start_date}`;
+              `Page used ${data.usage_count} times since ${data.start_date}`;
           }
           
         })
