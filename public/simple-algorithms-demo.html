@@ -16,7 +16,7 @@
   <script>
     // 1) The URL to your PythonAnywhere endpoint
     //    For example: /increment/myFunction
-    const incrementUrl = "https://yourusername.pythonanywhere.com/increment/myFunction";
+    const incrementUrl = "https://hedtwotoe.pythonanywhere.com/increment/myFunction";
 
     // 2) On button click, call the endpoint
     document.getElementById('btnIncrement').addEventListener('click', () => {
@@ -42,7 +42,7 @@
 
     // 3) (Optional) Show the current usage on page load by calling /status endpoint
     (function loadUsageOnStartup() {
-      fetch("https://yourusername.pythonanywhere.com/status/myFunction")
+      fetch("https://hedtwotoe.pythonanywhere.com/status/myFunction")
         .then(response => response.json())
         .then(data => {
           if (data.success) {
