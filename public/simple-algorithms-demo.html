@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Usage Counter Demo</title>
+</head>
+<body>
+  <h1>Usage Counter Demo</h1>
+  
+  <!-- Display the usage count here -->
+  <div>
+    <button id="btnIncrement">Increment "myFunction"</button>
+    <p>Current usage: <span id="usageDisplay">...</span></p>
+  </div>
+
+  <script>
+    // 1) The URL to your PythonAnywhere endpoint
+    //    For example: /increment/myFunction
+    const incrementUrl = "https://yourusername.pythonanywhere.com/increment/myFunction";
+
+    // 2) On button click, call the endpoint
+    document.getElementById('btnIncrement').addEventListener('click', () => {
+      fetch(incrementUrl, {
+        method: "POST"    // or "GET" if you prefer
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.success) {
+          // data.usage_count => the updated usage
+          document.getElementById('usageDisplay').textContent = data.usage_count;
+        } else {
+          // Show an error message
+          document.getElementById('usageDisplay').textContent = 
+            data.error || "Error updating usage";
+        }
+      })
+      .catch(err => {
+        console.error("Fetch error:", err);
+        document.getElementById('usageDisplay').textContent = "Request failed.";
+      });
+    });
+
+    // 3) (Optional) Show the current usage on page load by calling /status endpoint
+    (function loadUsageOnStartup() {
+      fetch("https://yourusername.pythonanywhere.com/status/myFunction")
+        .then(response => response.json())
+        .then(data => {
+          if (data.success) {
+            document.getElementById('usageDisplay').textContent = data.usage_count;
+          } else {
+            document.getElementById('usageDisplay').textContent = 
+              data.error || "Unknown function.";
+          }
+        })
+        .catch(err => console.error(err));
+    })();
+  </script>
+</body>
+</html>
