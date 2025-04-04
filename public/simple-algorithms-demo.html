@@ -5,18 +5,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Simple Algorithms Demo</title>
   <style>
-    /* Make the page fixed in size, hide overflow if you don’t want scrollbars */
     html, body {
       margin: 10px;
       padding: 0;
-      width: 1000px;  /* Pick your preferred width */
-      height: 700px;  /* Pick your preferred height */
-      /* overflow: hidden;  or remove this if you do want to scroll */
+      width: 1000px;  
+      height: 800px;  
       background-color: #d9ef5e;
       font-family: Arial, sans-serif;
     }
 
-    /* Use relative positioning on body so our #usageDisplay can use absolute coords */
     body {
       display: flex;
       flex-direction: row;
@@ -128,7 +125,7 @@
     </div>
     
   </div>
-  <!-- (Optional) Usage display area -->
+  <!-- Usage display area -->
   <div id="usageDisplay" class="usage-info">Page used ??? times since 2025-04-02</div>
 
   <script>
@@ -142,8 +139,6 @@
     const eraserButton = document.getElementById('eraserButton');
     const canvas = document.getElementById('noteCanvas');
     const ctx = canvas.getContext('2d');
-
-    // (Optional) If you added a usage display div above, uncomment:
     const usageDisplay = document.getElementById('usageDisplay');
 
     // Drawing/Eraser states
@@ -292,7 +287,6 @@
       return Array.from(numbers);
     }
 
-    // ******* Key change: we call the usage endpoint at the end *******
     function initializeCards() {
       // Clear card container and indexes
       cardContainer.innerHTML = "";
@@ -316,14 +310,13 @@
       tempCard.textContent = "None";
       tempCard.dataset.value = "None";
 
-      // 1) Now call your PythonAnywhere endpoint to track usage
+      // Call PythonAnywhere endpoint to track usage
       fetch("https://hedtwotoe.pythonanywhere.com/increment/newDeck", {
         method: "POST"
       })
         .then(response => response.json())
         .then(data => {
           console.log("initializeCards usage updated:", data);
-          /* If you want to display usage on the page, un-comment below:*/
           if (data.success && usageDisplay) {
             usageDisplay.textContent =
               `Page used ${data.usage_count} times since ${data.start_date}`;
