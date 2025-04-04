@@ -7,7 +7,7 @@
   <style>
     /* Make the page fixed in size, hide overflow if you don’t want scrollbars */
     html, body {
-      margin: 0;
+      margin: 10px;
       padding: 0;
       width: 1000px;  /* Pick your preferred width */
       height: 700px;  /* Pick your preferred height */
@@ -95,6 +95,8 @@
       text-align: left;
       background-color: #f6f5f0;
       border-top: 2px solid #444; /* small border to highlight the area */
+      border-left: 2px solid #444; /* small border to highlight the area */
+      border-right: 2px solid #444; /* small border to highlight the area */
     }
   </style>
 </head>
@@ -127,7 +129,7 @@
     
   </div>
   <!-- (Optional) Usage display area -->
-  <div id="usageDisplay" class="usage-info"></div>
+  <div id="usageDisplay" class="usage-info">Page used ??? times since 2025-04-02</div>
 
   <script>
     const cardContainer = document.getElementById('cards');
