@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <title>Pyodide Example with Pseudocode</title>
+  <script src="https://cdn.jsdelivr.net/pyodide/v0.23.4/full/pyodide.js"></script>
+  <script>
+    let pyodide;
+
+    // Initialize Pyodide
+    async function initializePyodide() {
+      pyodide = await loadPyodide();
+      console.log("Pyodide loaded successfully");
+    }
+    initializePyodide();
+
+    async function runPythonCode() {
+      const code = document.getElementById("pythonCode").value;
+      const outputElement = document.getElementById("output");
+
+      // Clear previous output
+      outputElement.textContent = "";
+
+      try {
+        // Redirect stdout to a StringIO in Python
+        await pyodide.runPythonAsync(`
+import sys, io
+sys.stdout = io.StringIO()
+`);
+
+        // Run user code
+        await pyodide.runPythonAsync(code);
+
+        // Retrieve stdout content
+        const captured = await pyodide.runPythonAsync("sys.stdout.getvalue()");
+
+        // Restore stdout
+        await pyodide.runPythonAsync("sys.stdout = sys.__stdout__");
+
+        // Display captured output
+        outputElement.textContent = captured;
+
+      } catch (error) {
+        outputElement.textContent = "Error:\n" + error;
+      }
+    }
+  </script>
+</head>
+<body>
+
+  <h1>Pyodide Demo with Pseudocode</h1>
+
+  <!-- Read-only pseudocode area -->
+  <h2>OCR Pseudocode (Read-only)</h2>
+  <textarea id="pseudoCode" rows="5" cols="60" readonly spellcheck="false">
+
+  </textarea>
+  <br><br>
+
+  <!-- Editable Python code area -->
+  <h2>Editable Python Code</h2>
+  <textarea id="pythonCode" rows="6" cols="60" spellcheck="false">
+    cards = [7,2,3,19,11,8]
+
+    for index in 
+    
+    def linearSearch(item):
+        for index in range(len(cards)):
+        if item == cards[index]:
+            return True
+        #end if
+        #next index
+        return False
+    #end function
+    
+    print(linearSearch(11))
+    print(linearSearch(100))
+    
+  </textarea>
+  <br><br>
+
+  <button onclick="runPythonCode()">Run</button>
+
+  <h2>Output:</h2>
+  <pre id="output"></pre>
+
+</body>
+</html>

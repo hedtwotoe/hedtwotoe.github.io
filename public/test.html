@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <title>Pyodide Example</title>
+  <script src="https://cdn.jsdelivr.net/pyodide/v0.23.4/full/pyodide.js"></script>
+  <script>
+    let pyodide;
+
+    // Load Pyodide
+    async function initializePyodide() {
+      pyodide = await loadPyodide();
+      console.log("Pyodide loaded successfully");
+    }
+    initializePyodide();
+
+    async function runPythonCode() {
+      let code = document.getElementById("pythonCode").value;
+      let outputElement = document.getElementById("output");
+
+      // Clear previous output
+      outputElement.textContent = "";
+
+      try {
+        // 1) Redirect stdout to a StringIO in Python
+        await pyodide.runPythonAsync(`
+import sys, io
+sys.stdout = io.StringIO()
+`);
+
+        // 2) Run the user code
+        await pyodide.runPythonAsync(code);
+
+        // 3) Get the entire stdout content
+        let captured = await pyodide.runPythonAsync("sys.stdout.getvalue()");
+
+        // 4) Restore stdout so we don’t break subsequent runs
+        await pyodide.runPythonAsync("sys.stdout = sys.__stdout__");
+
+        // 5) Display the captured stdout in the page
+        outputElement.textContent = captured;
+
+      } catch (error) {
+        // If there's an error, display it
+        outputElement.textContent = "Error:\n" + error;
+      }
+    }
+  </script>
+</head>
+<body>
+
+<h1>Pyodide Print Capture</h1>
+<p>Type Python code below and click Run:</p>
+
+<textarea id="pythonCode" rows="10" cols="60">
+cards = [7,2,3,19,11,8]
+
+for index in 
+
+def linearSearch(item):
+    for index in range(len(cards)):
+    if item == cards[index]:
+        return True
+    #end if
+    #next index
+    return False
+#end function
+
+print(linearSearch(11))
+print(linearSearch(100))
+</textarea>
+<br><br>
+
+<button onclick="runPythonCode()">Run</button>
+
+<h2>Output:</h2>
+<pre id="output"></pre>
+
+</body>
+</html>
